@@ -1,0 +1,7 @@
+// ..으로 경로 표시 대신 src를 baseUrl로 줘서 더 간편하게 함.
+{
+    "compilerOptions": {
+        "baseUrl": "src"
+    },
+    "include": ["src"]
+}
