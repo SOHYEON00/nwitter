@@ -23,14 +23,13 @@ function Nweet({ nweetObj, isOwner }) {
     setNewNweet(value);
   };
 
-  const onSubmitHandler = async(e) => {
+  const onSubmitHandler = async (e) => {
     e.preventDefault();
     await dbService.doc(`nweets/${nweetObj.id}`).update({
-        text: newNweet,
+      text: newNweet,
     });
     setIsEditing(false);
   };
-
 
   return (
     <div>
@@ -44,7 +43,7 @@ function Nweet({ nweetObj, isOwner }) {
               placeholder="당신의 Nweet을 수정하세요."
               value={newNweet}
             />
-            <input type="submit" value="Nwee 수정"/>
+            <input type="submit" value="Nwee 수정" />
           </form>
           <button onClick={toggleEditing}>취소</button>
         </>

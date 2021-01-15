@@ -5,7 +5,7 @@ import { authService } from "fBase";
 // App.js 가 모든 로직들을 다룰 예정
 function App() {
   // authService.currentUser : 현재 로그인 한 유저를 가리키나, 실제로 firebase를 통해 로그인/로그아웃한 지는 알 수 없다.
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  
   const [init, setInit] = useState(false); // 초기화 상태
   const [userObj, setUserObj] = useState(null); //유저 정보를 가지는 상태
 
@@ -13,11 +13,8 @@ function App() {
   useEffect(() => {
     authService.onAuthStateChanged((user) => {
       if (user) {
-        setIsLoggedIn(true);
         setUserObj(user); //로그인한 유저 정보를 저장
-      } else {
-        setIsLoggedIn(false);
-      }
+      } 
       setInit(true);
     });
   }, []);
@@ -25,7 +22,7 @@ function App() {
   return (
     <div className="App">
       {init ? (
-        <AppRouter isLoggedIn={isLoggedIn} userObj={userObj} />
+        <AppRouter isLoggedIn={Boolean(userObj)} userObj={userObj} />
       ) : (
         "Initializing..."
       )}
