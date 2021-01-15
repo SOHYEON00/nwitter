@@ -6,7 +6,7 @@ import React, { useState, useEffect } from "react";
 const Home = ({ userObj }) => {
   const [nweet, setNweet] = useState(""); //only for the form
   const [nweets, setNweets] = useState([]); //nweets array from db
-  const [attachment, setAttachment] = useState();
+  const [attachment, setAttachment] = useState("");
 
   // const getNweets = async () => {
   //   //get documents from 'nweets'collections
@@ -42,18 +42,22 @@ const Home = ({ userObj }) => {
 
   const onSubmitHandler = async (event) => {
     event.preventDefault();
-    // 1. Upload Image
-    const attachmentRef = storageService.ref().child(`${userObj.uid}/${uuidv4()}`) ;
-    //child: 이미지의 path - folder
-    //uiuidv4: random library
+    let attachmentURL = "";
 
-    const response = await attachmentRef.putString(attachment, "data_url"); //.putString(data, data format)
-    const attachmentURL = await response.ref.getDownloadURL();
+    if(attachment !== "") {
+      // Upload Image
+      const attachmentRef = storageService
+        .ref()
+        .child(`${userObj.uid}/${uuidv4()}`); //child: 이미지의 path - folder
+      const response = await attachmentRef.putString(attachment, "data_url"); //.putString(data, data format)
+      attachmentURL = await response.ref.getDownloadURL();
+    };
+
     const nweetObj = {
-      text: nweet,
-      createdAt: Date.now(),
-      creatorId: userObj.uid,
-      attachmentURL,
+        text: nweet,
+        createdAt: Date.now(),
+        creatorId: userObj.uid,
+        attachmentURL,
     };
     await dbService.collection("nweets").add(nweetObj);
     setNweet("");
