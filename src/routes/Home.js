@@ -1,5 +1,6 @@
 import Nweet from "components/Nweet";
-import { dbService } from "fBase";
+import {v4 as uuidv4} from "uuid";
+import { dbService, storageService } from "fBase";
 import React, { useState, useEffect } from "react";
 
 const Home = ({ userObj }) => {
@@ -38,14 +39,25 @@ const Home = ({ userObj }) => {
     } = event;
     setNweet(value);
   };
+
   const onSubmitHandler = async (event) => {
     event.preventDefault();
-    await dbService.collection("nweets").add({
-      text: nweet,
-      createdAt: Date.now(),
-      creatorId: userObj.uid,
-    });
-    setNweet("");
+    // 1. Upload Image
+    const fileRef = storageService.ref().child(`${userObj.uid}/${uuidv4()}`) ;
+    //child: 이미지의 path - folder
+    //uiuidv4: random library
+
+    const response = await fileRef.putString(attachment, "data_url"); //.putString(data, data format)
+    console.log(response);
+    
+
+    //  2. Upload Text
+    // await dbService.collection("nweets").add({ 
+    //   text: nweet,
+    //   createdAt: Date.now(),
+    //   creatorId: userObj.uid,
+    // });
+    // setNweet("");
   };
 
   const onFileChange = (event) => {
