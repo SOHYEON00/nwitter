@@ -31,22 +31,27 @@ function Nweet({ nweetObj, isOwner }) {
     setIsEditing(false);
   };
 
+
   return (
     <div>
       {isEditing ? (
-       <>
-         { isOwner &&  <><form onSubmit={onSubmitHandler}>
-            <input
-              type="text"
-              onChange={onTextChange}
-              required
-              placeholder="당신의 Nweet을 수정하세요."
-              value={newNweet}
-            />
-            <input type="submit" value="Nwee 수정" />
-          </form>
-          <button onClick={toggleEditing}>취소</button>  </>}
-      </>
+        <>
+          {isOwner && (
+            <>
+              <form onSubmit={onSubmitHandler}>
+                <input
+                  type="text"
+                  onChange={onTextChange}
+                  required
+                  placeholder="당신의 Nweet을 수정하세요."
+                  value={newNweet}
+                />
+                <input type="submit" value="Nwee 수정" />
+              </form>
+              <button onClick={toggleEditing}>취소</button>{" "}
+            </>
+          )}
+        </>
       ) : (
         <>
           {" "}

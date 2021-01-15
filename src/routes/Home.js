@@ -3,8 +3,9 @@ import { dbService } from "fBase";
 import React, { useState, useEffect } from "react";
 
 const Home = ({ userObj }) => {
-  const [nweet, setNweet] = useState(""); //only for the form 
+  const [nweet, setNweet] = useState(""); //only for the form
   const [nweets, setNweets] = useState([]); //nweets array from db
+  const [attachment, setAttachment] = useState();
 
   // const getNweets = async () => {
   //   //get documents from 'nweets'collections
@@ -16,13 +17,14 @@ const Home = ({ userObj }) => {
   //     };
   //     setNweets((prev) => [nweetObject, ...prev]); //make an array of documents.datas
   //   });
-    
+
   // };
 
   useEffect(() => {
     //Listening to DB on real time
-    dbService.collection("nweets").onSnapshot(snapshot => {
-      const nweetArray = snapshot.docs.map(doc => ({ // getNweets()대신 snapShot사용, realtime으로 db 정보 가져올 수 있음
+    dbService.collection("nweets").onSnapshot((snapshot) => {
+      const nweetArray = snapshot.docs.map((doc) => ({
+        // getNweets()대신 snapShot사용, realtime으로 db 정보 가져올 수 있음
         id: doc.id,
         ...doc.data(),
       }));
@@ -46,6 +48,26 @@ const Home = ({ userObj }) => {
     setNweet("");
   };
 
+  const onFileChange = (event) => {
+    const {
+      target: { files },
+    } = event;
+    const theFile = files[0];
+    const reader = new FileReader();
+    reader.onloadend = (finishedEvent) => {
+      const {
+        currentTarget: { result },
+      } = finishedEvent; //finishedEvent.currentTarget.result 값을 ES6로 표현한 것
+      setAttachment(result);
+    };
+
+    reader.readAsDataURL(theFile);
+  };
+
+  const onClearAttachment = () => {
+    setAttachment(null);
+  };
+
   return (
     <div>
       <form onSubmit={onSubmitHandler}>
@@ -55,12 +77,24 @@ const Home = ({ userObj }) => {
           onChange={onTextChange}
           placeholder="What's on your mind?"
         />
+        <input type="file" accept="image/*" onChange={onFileChange} />
         <input type="submit" value="Nweet" />
+        {attachment && (
+          <div>
+            <img src={attachment} width="50px" height="50px" />
+            <button onClick={onClearAttachment}>Clear Image</button>
+          </div>
+        )}
+        {/* attachment가 존재하는 경우만 이미지 출력 */}
       </form>
       <div>
         {nweets.map((nweet) => {
           return (
-            <Nweet key={nweet.id} nweetObj={nweet} isOwner={nweet.creatorId === userObj.uid}/>
+            <Nweet
+              key={nweet.id}
+              nweetObj={nweet}
+              isOwner={nweet.creatorId === userObj.uid}
+            />
           );
         })}
       </div>
