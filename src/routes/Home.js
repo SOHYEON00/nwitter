@@ -3,8 +3,8 @@ import { dbService } from "fBase";
 import React, { useState, useEffect } from "react";
 
 const Home = ({ userObj }) => {
-  const [nweet, setNweet] = useState("");
-  const [nweets, setNweets] = useState([]);
+  const [nweet, setNweet] = useState(""); //only for the form 
+  const [nweets, setNweets] = useState([]); //nweets array from db
 
   // const getNweets = async () => {
   //   //get documents from 'nweets'collections
@@ -20,7 +20,7 @@ const Home = ({ userObj }) => {
   // };
 
   useEffect(() => {
-    //onShapshot 메소드는 listener, DB의 변화를 바로바로 알려줌.
+    //Listening to DB on real time
     dbService.collection("nweets").onSnapshot(snapshot => {
       const nweetArray = snapshot.docs.map(doc => ({ // getNweets()대신 snapShot사용, realtime으로 db 정보 가져올 수 있음
         id: doc.id,

@@ -2,8 +2,8 @@ import { dbService } from "fBase";
 import React, { useState } from "react";
 
 function Nweet({ nweetObj, isOwner }) {
-  const [isEditing, setIsEditing] = useState(false);
-  const [newNweet, setNewNweet] = useState(nweetObj.text);
+  const [isEditing, setIsEditing] = useState(false); //Is editing or not
+  const [newNweet, setNewNweet] = useState(nweetObj.text); //수정될 nweet
 
   const onDeleteClick = async () => {
     const ok = window.confirm("정말 삭제하시겠습니까?");
@@ -34,8 +34,8 @@ function Nweet({ nweetObj, isOwner }) {
   return (
     <div>
       {isEditing ? (
-        <>
-          <form onSubmit={onSubmitHandler}>
+       <>
+         { isOwner &&  <><form onSubmit={onSubmitHandler}>
             <input
               type="text"
               onChange={onTextChange}
@@ -45,8 +45,8 @@ function Nweet({ nweetObj, isOwner }) {
             />
             <input type="submit" value="Nwee 수정" />
           </form>
-          <button onClick={toggleEditing}>취소</button>
-        </>
+          <button onClick={toggleEditing}>취소</button>  </>}
+      </>
       ) : (
         <>
           {" "}
