@@ -43,21 +43,21 @@ const Home = ({ userObj }) => {
   const onSubmitHandler = async (event) => {
     event.preventDefault();
     // 1. Upload Image
-    const fileRef = storageService.ref().child(`${userObj.uid}/${uuidv4()}`) ;
+    const attachmentRef = storageService.ref().child(`${userObj.uid}/${uuidv4()}`) ;
     //child: 이미지의 path - folder
     //uiuidv4: random library
 
-    const response = await fileRef.putString(attachment, "data_url"); //.putString(data, data format)
-    console.log(response);
-    
-
-    //  2. Upload Text
-    // await dbService.collection("nweets").add({ 
-    //   text: nweet,
-    //   createdAt: Date.now(),
-    //   creatorId: userObj.uid,
-    // });
-    // setNweet("");
+    const response = await attachmentRef.putString(attachment, "data_url"); //.putString(data, data format)
+    const attachmentURL = await response.ref.getDownloadURL();
+    const nweetObj = {
+      text: nweet,
+      createdAt: Date.now(),
+      creatorId: userObj.uid,
+      attachmentURL,
+    };
+    await dbService.collection("nweets").add(nweetObj);
+    setNweet("");
+    setAttachment(null);
   };
 
   const onFileChange = (event) => {
