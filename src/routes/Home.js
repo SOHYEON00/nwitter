@@ -1,3 +1,4 @@
+import Nweet from "components/Nweet";
 import { dbService } from "fBase";
 import React, { useState, useEffect } from "react";
 
@@ -23,7 +24,7 @@ const Home = ({ userObj }) => {
     dbService.collection("nweets").onSnapshot(snapshot => {
       const nweetArray = snapshot.docs.map(doc => ({ // getNweets()대신 snapShot사용, realtime으로 db 정보 가져올 수 있음
         id: doc.id,
-        ...doc.data()
+        ...doc.data(),
       }));
       setNweets(nweetArray);
     });
@@ -40,7 +41,7 @@ const Home = ({ userObj }) => {
     await dbService.collection("nweets").add({
       text: nweet,
       createdAt: Date.now(),
-      creator: userObj.uid //props로 받은 유저정보 중 id
+      creatorId: userObj.uid,
     });
     setNweet("");
   };
@@ -59,9 +60,7 @@ const Home = ({ userObj }) => {
       <div>
         {nweets.map((nweet) => {
           return (
-            <div key={nweet.id}>
-              <h4>{nweet.text}</h4>
-            </div>
+            <Nweet key={nweet.id} nweetObj={nweet} isOwner={nweet.creatorId === userObj.uid}/>
           );
         })}
       </div>
