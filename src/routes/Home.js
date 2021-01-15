@@ -6,7 +6,7 @@ import React, { useState, useEffect } from "react";
 const Home = ({ userObj }) => {
   const [nweet, setNweet] = useState(""); //only for the form
   const [nweets, setNweets] = useState([]); //nweets array from db
-  const [attachment, setAttachment] = useState("");
+  const [attachment, setAttachment] = useState();
 
   // const getNweets = async () => {
   //   //get documents from 'nweets'collections
@@ -60,28 +60,33 @@ const Home = ({ userObj }) => {
         attachmentURL,
     };
     await dbService.collection("nweets").add(nweetObj);
+
     setNweet("");
-    setAttachment(null);
+    setAttachment("");
   };
 
   const onFileChange = (event) => {
     const {
       target: { files },
     } = event;
-    const theFile = files[0];
+    
     const reader = new FileReader();
+
     reader.onloadend = (finishedEvent) => {
       const {
         currentTarget: { result },
       } = finishedEvent; //finishedEvent.currentTarget.result 값을 ES6로 표현한 것
       setAttachment(result);
     };
-
-    reader.readAsDataURL(theFile);
+    if(files.lenght > 0) { 
+      const theFile = files[0];
+      reader.readAsDataURL(theFile); 
+    }    
+    
   };
 
   const onClearAttachment = () => {
-    setAttachment(null);
+    setAttachment("");
   };
 
   return (
@@ -98,7 +103,7 @@ const Home = ({ userObj }) => {
         {attachment && (
           <div>
             <img src={attachment} width="50px" height="50px" />
-            <button onClick={onClearAttachment}>Clear Image</button>
+            <button onClick={onClearAttachment}>Clear</button>
           </div>
         )}
         {/* attachment가 존재하는 경우만 이미지 출력 */}

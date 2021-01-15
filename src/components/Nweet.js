@@ -1,4 +1,4 @@
-import { dbService } from "fBase";
+import { dbService, storageService } from "fBase";
 import React, { useState } from "react";
 
 function Nweet({ nweetObj, isOwner }) {
@@ -9,6 +9,7 @@ function Nweet({ nweetObj, isOwner }) {
     const ok = window.confirm("정말 삭제하시겠습니까?");
     if (ok) {
       await dbService.doc(`nweets/${nweetObj.id}`).delete(); //id를 알고 있기 때문에 가능./
+      await storageService.refFromURL(nweetObj.attachmentURL).delete(); //Delete file
     }
   };
 
@@ -23,7 +24,7 @@ function Nweet({ nweetObj, isOwner }) {
     setNewNweet(value);
   };
 
-  const onSubmitHandler = async (e) => {
+  const onSubmitHandler = async(e) => {
     e.preventDefault();
     await dbService.doc(`nweets/${nweetObj.id}`).update({
       text: newNweet,
