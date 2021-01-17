@@ -78,7 +78,8 @@ const Home = ({ userObj }) => {
       } = finishedEvent; //finishedEvent.currentTarget.result 값을 ES6로 표현한 것
       setAttachment(result);
     };
-    if(files.lenght > 0) { 
+
+    if(files.lenght > 0) { //오류 수정 -> 파일선택하려다 취소한 경우
       const theFile = files[0];
       reader.readAsDataURL(theFile); 
     }    
