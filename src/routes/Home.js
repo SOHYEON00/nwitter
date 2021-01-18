@@ -6,7 +6,7 @@ import React, { useState, useEffect } from "react";
 const Home = ({ userObj }) => {
   const [nweet, setNweet] = useState(""); //only for the form
   const [nweets, setNweets] = useState([]); //nweets array from db
-  const [attachment, setAttachment] = useState();
+  const [attachment, setAttachment] = useState("");
 
   // const getNweets = async () => {
   //   //get documents from 'nweets'collections
