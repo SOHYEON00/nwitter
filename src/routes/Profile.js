@@ -12,18 +12,18 @@ const Profile = ({ userObj }) => {
     history.push("/");
   };
 
-  const getMyNweets = async() => {
-    const myNweets = await dbService
-      .collection("nweets")
-      .where("creatorId", "==", userObj.uid)
-      .orderBy("createdAt")
-      .get(); 
-    console.log(myNweets.docs.map((doc) => doc.data()));
-  };
+//   const getMyNweets = async() => {
+//     const myNweets = await dbService
+//       .collection("nweets")
+//       .where("creatorId", "==", userObj.uid)
+//       .orderBy("createdAt")
+//       .get(); 
+//     console.log(myNweets.docs.map((doc) => doc.data()));
+//   };
 
-  useEffect(() => {
-    getMyNweets();
-  }, []);
+//   useEffect(() => {
+//     getMyNweets();
+//   }, []);
 
   const onTextChange = (event) => {
     const {
@@ -32,16 +32,26 @@ const Profile = ({ userObj }) => {
     setNewDisplayName(value);
   };
 
-  const onSubmitHandler = (event) => {
+  const onSubmitHandler = async(event) => {
       event.preventDefault();
-
+      if(newDisplayName !== userObj.displayName){
+        await userObj.updateProfile({
+            displayName: newDisplayName,
+        });
+      }
   }
   return (
     <>
-    <form onSubmit={onSubmitHandler}>
-        <input type="text" placeholder="Display your name" required value={newDisplayName} onChange={onTextChange}/>
-        <input type="submit" value="Update Name"/>
-    </form>
+      <form onSubmit={onSubmitHandler}>
+        <input
+          type="text"
+          placeholder="Display your name"
+          required
+          value={newDisplayName}
+          onChange={onTextChange}
+        />
+        <input type="submit" value="Update Name" />
+      </form>
       <button onClick={onSignOutClick}>Sign out</button>
     </>
   );
