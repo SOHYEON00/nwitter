@@ -13,16 +13,42 @@ function App() {
   useEffect(() => {
     authService.onAuthStateChanged((user) => {
       if (user) {
-        setUserObj(user); //로그인한 유저 정보를 저장
+        setUserObj({
+          displayName: user.displayName,
+          uid: user.uid,
+          updateProfile: (args) => user.updateProfile(args),
+        }); //로그인한 유저 정보를 저장
       } 
       setInit(true);
     });
   }, []);
 
+  const refreshUser = () => {
+    //setUserObj(authService.currentUser); //Not Working! but {displayName: "asdf"}는 작동함.
+    //authService.currentUser가 너무 커서 바꾸ㅟ넋을 판단하기가 어렵다.
+    //option1. authService.currentUser object의 크기를 줄여준다.
+    //useEffect에서 setUserObj할때 첨부터 크기가 큰 user를 다 데려오는게 아니라 필요한 것만 데려오기.
+    const user = authService.currentUser;
+    setUserObj({
+      displayName: user.displayName,
+      uid: user.uid,
+      updateProfile: (args) => user.updateProfile(args),
+    });
+
+    // option2 빈 {}안에 원래 user의 사본이 새 {}형태로 생성되는데 이 덕에 react가 새로운 {}가 생성됐네! 하고 재렌더링해줌
+    /* 하지만 오류 발생할 수 있음
+    setUserObj(Object.assign({}, user));
+    */
+  };
+
   return (
     <div className="App">
       {init ? (
-        <AppRouter isLoggedIn={Boolean(userObj)} userObj={userObj} />
+        <AppRouter
+          refreshUser={refreshUser}
+          isLoggedIn={Boolean(userObj)}
+          userObj={userObj}
+        />
       ) : (
         "Initializing..."
       )}
