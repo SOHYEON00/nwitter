@@ -9,7 +9,7 @@ const AppRouter = ({ isLoggedIn, userObj }) => {
   //   Router가 Routes를 보여주는 용도로만 사용되기 위해 state 이동 -> App.js
   return (
     <Router>
-      {isLoggedIn && <Navigation />}{" "}
+      {isLoggedIn && <Navigation userObj={userObj}/>}
       {/* A && B : B를 실행하기 위해선 A가 TRUE여야 한다. */}
       <Switch>
         {isLoggedIn ? (

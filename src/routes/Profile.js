@@ -1,9 +1,10 @@
 import { authService, dbService } from "fBase";
-import React, {useEffect} from "react";
+import React, {useState, useEffect} from "react";
 import {useHistory} from "react-router-dom";
 
 const Profile = ({ userObj }) => {
   const history = useHistory();
+  const [newDisplayName, setNewDisplayName] = useState(userObj.displayName);
 
   //sign out
   const onSignOutClick = () => {
@@ -15,7 +16,7 @@ const Profile = ({ userObj }) => {
     const myNweets = await dbService
       .collection("nweets")
       .where("creatorId", "==", userObj.uid)
-      .orderBy("createdAt", "desc")
+      .orderBy("createdAt")
       .get(); 
     console.log(myNweets.docs.map((doc) => doc.data()));
   };
@@ -23,9 +24,25 @@ const Profile = ({ userObj }) => {
   useEffect(() => {
     getMyNweets();
   }, []);
+
+  const onTextChange = (event) => {
+    const {
+      target: { value },
+    } = event;
+    setNewDisplayName(value);
+  };
+
+  const onSubmitHandler = (event) => {
+      event.preventDefault();
+
+  }
   return (
     <>
-      <button onClick={onSignOutClick}>S ign out</button>
+    <form onSubmit={onSubmitHandler}>
+        <input type="text" placeholder="Display your name" required value={newDisplayName} onChange={onTextChange}/>
+        <input type="submit" value="Update Name"/>
+    </form>
+      <button onClick={onSignOutClick}>Sign out</button>
     </>
   );
 };
