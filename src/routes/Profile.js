@@ -12,7 +12,11 @@ const Profile = ({ userObj }) => {
   };
 
   const getMyNweets = async() => {
-    const myNweets = await dbService.collection("nweets").where("creatorId", "==", userObj.uid).get(); 
+    const myNweets = await dbService
+      .collection("nweets")
+      .where("creatorId", "==", userObj.uid)
+      .orderBy("createdAt", "desc")
+      .get(); 
     console.log(myNweets.docs.map((doc) => doc.data()));
   };
 
