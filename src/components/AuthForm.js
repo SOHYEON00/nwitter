@@ -38,7 +38,7 @@ const AuthForm = () => {
 
   return (
     <>
-      <form onSubmit={onFormSubmit}>
+      <form onSubmit={onFormSubmit} className="formContainer">
         <input
           name="email"
           type="email"
@@ -46,6 +46,7 @@ const AuthForm = () => {
           required
           value={email}
           onChange={onValueChanged}
+          className="authInput"
         />
         <input
           name="password"
@@ -54,17 +55,20 @@ const AuthForm = () => {
           required
           value={password}
           onChange={onValueChanged}
+          className="authInput"
         />
         <input
           type="submit"
           value={newAccount ? "Create new account" : "Log in"}
+          className="authInput authSubmit"
         />
+        {error && <span className="authError">{error}</span>}
       </form>
       {/* 반대의 기능 사용 create new account <-> sign in */}
-      <span onClick={toggleAccount}>
+      <span onClick={toggleAccount} className="authSwitch">
         {newAccount ? "Sign In" : "Create new account"}
       </span>
-      {error}
+      
     </>
   );
 }

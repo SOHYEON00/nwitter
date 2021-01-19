@@ -24,7 +24,6 @@ const Home = ({ userObj }) => {
     //Listening to DB on real time
     dbService.collection("nweets").onSnapshot((snapshot) => {
       const nweetArray = snapshot.docs.map((doc) => ({
-        // getNweets()대신 snapShot사용, realtime으로 db 정보 가져올 수 있음
         id: doc.id,
         ...doc.data(),
       }));
@@ -34,8 +33,9 @@ const Home = ({ userObj }) => {
 
 
   return (
-      <div>
-        <NweetFactory userObj={userObj} />
+    <>
+      <NweetFactory userObj={userObj} />
+      <>
         {nweets.map((nweet) => {
           return (
             <Nweet
@@ -45,7 +45,8 @@ const Home = ({ userObj }) => {
             />
           );
         })}
-      </div>
+      </>
+    </>
   );
 };
 export default Home;

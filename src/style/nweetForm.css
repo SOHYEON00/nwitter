@@ -1,0 +1,72 @@
+.factoryForm{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    widows: 100%;
+}
+
+.factoryInput_container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    position: relative;
+    margin-bottom: 20px;
+    width: 100%;
+}
+
+.factoryInput_input {
+    flex-grow: 1;
+    height: 40px;
+    padding: 0px 20px;
+    color: white;
+    border: 1px solid #04aaff;
+    border-radius: 20px;
+    font-weight: 500;
+    font-size: 12px;
+}
+
+.factoryInput_arrow {
+    position: absolute;
+    right: 0px;
+    background-color: #04aaff;
+    height: 40px;
+    width: 40px;
+    padding: 10px 0px;
+    text-align: center;
+    border-radius: 20px;
+    color: white;
+}
+
+.factoryInput_label {
+    color: #04aaff;
+    cursor: pointer;
+}
+
+.factoryInput_label span {
+    margin-right: 10px;
+    font-size: 12px;
+}
+
+.factoryForm_attachment {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.factoryForm_attachment img {
+    height: 80px;
+    width: 80px;
+    border-radius: 40px;
+}
+
+.factoryForm_clear {
+    color: #03aaff;
+    cursor: pointer;
+    text-align: center;
+}
+
+.factoryForm_clear span {
+    margin-right: 10px;
+    font-size:12px;
+}

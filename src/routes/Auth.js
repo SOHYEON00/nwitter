@@ -1,6 +1,12 @@
 import React from "react";
 import { firebaseInstance, authService } from "fBase";
 import AuthForm from "components/AuthForm";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faTwitter,
+  faGoogle,
+  faGithub,
+} from "@fortawesome/free-brands-svg-icons";
 
 const Auth = () => {
 
@@ -18,12 +24,32 @@ const Auth = () => {
   };
 
   return (
-    <div>
+    <div className="authContainer">
+      <FontAwesomeIcon
+        icon={faTwitter}
+        color={"#04AAFF"}
+        size="3x"
+        className="icon_twitter"
+      />
       <AuthForm />
-      <div>
-        <button onClick={onSocialClick} name="google">Google 이메일로 로그인하기</button>
-        <button onClick={onSocialClick} name="github">Github 이메일로 로그인하기</button>
-      </div>
+      <article className="socialSignInBtns">
+        <button
+          onClick={onSocialClick}
+          name="google"
+          className="socialSignInBtn"
+        >
+          Google 이메일로 로그인하기
+          <FontAwesomeIcon icon={faGoogle} className="socialIcon"/>
+        </button>
+        <button
+          onClick={onSocialClick}
+          name="github"
+          className="socialSignInBtn"
+        >
+          Github 이메일로 로그인하기
+          <FontAwesomeIcon icon={faGithub} className="socialIcon"/>
+        </button>
+      </article>
     </div>
   );
 };

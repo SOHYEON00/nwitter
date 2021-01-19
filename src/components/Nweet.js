@@ -1,5 +1,7 @@
 import { dbService, storageService } from "fBase";
 import React, { useState } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrash, faPencilAlt } from "@fortawesome/free-solid-svg-icons";
 
 function Nweet({ nweetObj, isOwner }) {
   const [isEditing, setIsEditing] = useState(false); //Is editing or not
@@ -33,41 +35,48 @@ function Nweet({ nweetObj, isOwner }) {
   };
 
   return (
-    <div>
+    <article className="nweet">
       {isEditing ? (
         <>
           {isOwner && (
             <>
-              <form onSubmit={onSubmitHandler}>
+              <form onSubmit={onSubmitHandler} className="container nweetEdit">
                 <input
                   type="text"
                   onChange={onTextChange}
                   required
+                  autoFocus
                   placeholder="당신의 Nweet을 수정하세요."
                   value={newNweet}
+                  className="formInput"
                 />
-                <input type="submit" value="Nwee 수정" />
+                <input type="submit" value="Nweet 수정" className="formBtn"/>
               </form>
-              <button onClick={toggleEditing}>취소</button>{" "}
+              <span onClick={toggleEditing} className="formBtn cancelBtn">
+                Cancel
+              </span>
             </>
           )}
         </>
       ) : (
         <>
-          {" "}
           <h4>{nweetObj.text}</h4>
-          {nweetObj.attachmentURL && (
-            <img src={nweetObj.attachmentURL} width="50px" height="50px" alt="attachment" />
-          )}
+          {nweetObj.attachmentURL && <img src={nweetObj.attachmentURL} />}
           {isOwner && (
             <>
-              <button onClick={onDeleteClick}>Delete</button>
-              <button onClick={toggleEditing}>Edit</button>
+              <div className="nweet_actions">
+                <span onClick={onDeleteClick}>
+                  <FontAwesomeIcon icon={faTrash}/>
+                </span>
+                <span onClick={toggleEditing}>
+                  <FontAwesomeIcon icon={faPencilAlt} />
+                </span>
+              </div>
             </>
           )}
         </>
       )}
-    </div>
+    </article>
   );
 }
 

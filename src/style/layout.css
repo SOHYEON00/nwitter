@@ -1,0 +1,12 @@
+/* nav */
+
+.navMenu {
+    display: flex;
+    flex-direction: row;
+}
+
+.profile_link {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
