@@ -42,7 +42,7 @@ const Profile = ({ refreshUser, userObj }) => {
       }
   }
   return (
-    <>
+    <div className="profileContainer">
       <form onSubmit={onSubmitHandler} className="profileForm">
         <input
           type="text"
@@ -56,13 +56,11 @@ const Profile = ({ refreshUser, userObj }) => {
         <input
           type="submit"
           value="Update Name"
-          style={{
-            marginTop: 10,
-          }}
+          className="formBtn"
         />
       </form>
-      <span className="formBtn cancelBtn logOut" onClick={onSignOutClick}>Sign Out </span>
-    </>
+      <span className="formBtn cancelBtn" onClick={onSignOutClick}>Sign Out </span>
+    </div>
   );
 };
 export default Profile;

@@ -1,12 +1,27 @@
 /* nav */
 
+
 .navMenu {
     display: flex;
     flex-direction: row;
+    margin-top: 5rem;
+    justify-content: center;
 }
 
 .profile_link {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    align-items: center;
+}
+
+.profile_link span {
+    font-size: 12px;
+    margin: 10px;
+}
+
+/* footer */
+
+.App footer {
+    margin: 5rem 0;
 }

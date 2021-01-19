@@ -99,7 +99,7 @@ function NweetFactory({ userObj }) {
         {attachment && (
           <div className="factoryForm_attachment">
             <img src={attachment} style={{backgroundImage: attachment,}} />
-            <div calssName="factoryFrom_clear" onClick={onClearAttachment} >
+            <div calssName="factoryForm_clear" onClick={onClearAttachment} >
               <span>Remove</span>
               <FontAwesomeIcon icon={faTimes}/>
             </div>

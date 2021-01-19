@@ -36,3 +36,31 @@ a {
 form {
     width: 100%;
 }
+
+.formInput {
+    width: 100%;
+    padding: 0.5rem 5rem;
+    border-radius: 20px;
+    border: 1px solid black;
+    text-align: center;
+    background-color:  white;
+    color: black;
+    margin: 0.5rem 0;
+}
+
+.formBtn {
+    cursor: pointer;
+    width: 100%;
+    padding: 7px 0;
+    text-align: center;
+    color: white;
+    border-radius: 20px;
+    background-color: #04aaff;
+    cursor: pointer;
+    font-size: 18px;
+}
+
+.cancelBtn {
+    cursor: pointer;
+    background-color: tomato;
+}

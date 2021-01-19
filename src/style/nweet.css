@@ -4,12 +4,27 @@
     margin-bottom: 5px;
 }
 
+.formBtn {
+    cursor: pointer;
+    width: 100%;
+    padding: 0.5rem 0;
+    text-align: center;
+    color: white;
+    border-radius: 20px;
+    background-color: #04aaff;
+}
+
+.cancelBtn {
+    cursor: pointer;
+    background-color: tomato;
+}
+
 .nweet {
     margin-bottom: 20px;
     background-color: white;
     width: 100%;
     max-width: 320px;
-    padding: 20px;
+    padding: 1.5rem;
     border-radius: 10px;
     position: relative;
     display: flex;
