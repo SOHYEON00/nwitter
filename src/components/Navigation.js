@@ -5,7 +5,7 @@ import { faTwitter } from "@fortawesome/free-brands-svg-icons";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
 
 function Navigation({ userObj }) {
-console.log(userObj);
+
     return (
       <nav>
         <ul className="navMenu">

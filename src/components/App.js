@@ -12,11 +12,13 @@ function App() {
   //onAuthStateChanged : 사용자의 로그인 상태를 관찰하는 관찰자를 추가해줌
   useEffect(() => {
     authService.onAuthStateChanged((user) => {
+  
       if (user) { //로그인한 유저 정보를 저장
         setUserObj({
           displayName: user.displayName,
           uid: user.uid,
           updateProfile: (args) => user.updateProfile(args),
+          photoUrl: user.photoURL,
         }); 
       } else{ //로그아웃
         setUserObj(null); 

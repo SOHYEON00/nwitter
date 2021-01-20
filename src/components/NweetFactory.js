@@ -1,8 +1,9 @@
 import React, {useState} from 'react';
 import { v4 as uuidv4 } from "uuid";
 import { dbService, storageService } from "fBase";
+import FileUpload from './FileUpload';
+import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus, faTimes } from "@fortawesome/free-solid-svg-icons";
 
 
 function NweetFactory({ userObj }) {
@@ -59,7 +60,7 @@ function NweetFactory({ userObj }) {
       setAttachment(result);
     };
 
-    // if (files.lenght > 0) {
+    // if (files.length > 0) {
     //   //오류 수정 -> 파일선택하려다 취소한 경우
     //   const theFile = files[0];
       reader.readAsDataURL(theFile);
@@ -83,25 +84,13 @@ function NweetFactory({ userObj }) {
           />
           <input type="submit" value="&rarr;" className="factoryInput_arrow"/>
       </div>
-      <label htmlFor="attach-file" className="factoryInput_label">
-        <span>Add photos</span>
-        <FontAwesomeIcon icon={faPlus}/>
-      </label>
-      <input
-        id="attach-file"
-        type="file"
-        accept="image/*"
-        onChange={onFileChange}
-        style={{
-          opacity: 0,
-        }}
-        />
-        {attachment && (
+      <FileUpload onFileChange={onFileChange}/>
+      {attachment && (
           <div className="factoryForm_attachment">
-            <img src={attachment} style={{backgroundImage: attachment,}} />
-            <div calssName="factoryForm_clear" onClick={onClearAttachment} >
+            <img src={attachment} style={{ backgroundImage: attachment }} />
+            <div className="factoryForm_clear" onClick={onClearAttachment}>
               <span>Remove</span>
-              <FontAwesomeIcon icon={faTimes}/>
+              <FontAwesomeIcon icon={faTimes} />
             </div>
           </div>
         )}
