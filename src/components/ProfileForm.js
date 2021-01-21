@@ -1,15 +1,31 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
-import { dbService, storageService } from "fBase";
+import { storageService } from "fBase";
 import FileUpload from "components/FileUpload";
 import { useHistory } from "react-router-dom";
 
 function ProfileForm({ refreshUser, userObj }) {
   const history = useHistory();
+  const [profilePhoto, setProfilePhoto] = useState("");
   const [newDisplayName, setNewDisplayName] = useState(userObj.displayName);
   const [newPhoto, setNewPhoto] = useState(userObj.photoUrl);
-  const originalProfile = userObj.photoUrl;
+
+  const getUrl = async() => {
+    const attachmentRef = storageService
+      .ref()
+      .child(`${userObj.uid}/userPhoto`); 
+    await attachmentRef
+    .getDownloadURL().then((url) => {
+      console.log(url);
+
+      setProfilePhoto(url);
+    });
+  } 
+
+  useEffect(() => {
+    getUrl();
+  }, []);
 
   const onTextChange = (event) => {
     const {
@@ -37,7 +53,7 @@ function ProfileForm({ refreshUser, userObj }) {
       reader.readAsDataURL(theFile);
     }
   };
-console.log(userObj);
+  console.log(userObj);
   const onSubmitHandler = async (event) => {
     event.preventDefault();
     let newPhotoUrl = "";
@@ -49,25 +65,30 @@ console.log(userObj);
     }
 
     //FIND -> UPDATE USER INFO
-    if (newPhoto !== originalProfile) {
+    if (newPhoto !== userObj.photoUrl) {
       const attachmentRef = storageService
         .ref()
         .child(`${userObj.uid}/userPhoto`);
       const response = await attachmentRef.putString(newPhoto, "data_url");
-      newPhotoUrl = await response.ref.getDownloadURL();
-   
-    setNewPhoto(newPhotoUrl);
-    }
+      await response.ref.getDownloadURL().then((url) => {
+          console.log(url);
 
+          userObj.updateProfile({
+            photoUrl: url,
+          });
+      });
+
+      
+    }
     refreshUser();
     alert("프로필이 성공적으로 업데이트 되었습니다.");
     history.push("/");
   };
 
   const onClearAttachment = () => {
-    setNewPhoto(originalProfile); //원래 사진으로 변경
+    setNewPhoto(userObj.photoUrl); //원래 사진으로 변경
   };
-console.log(newPhoto);
+
   return (
     <form onSubmit={onSubmitHandler} className="profileForm">
       <input
@@ -79,15 +100,11 @@ console.log(newPhoto);
         onChange={onTextChange}
         className="formInput"
       />
-      {newPhoto ? (
-        <img src={newPhoto} alt="profile_photo" width="300" />
-      ) : (
-        <p>사진을 업로드 해주세요.</p>
-      )}
+      {profilePhoto && <img src={profilePhoto} alt="profile_photo" width="300"/>}
 
       <FileUpload onFileChange={onFileChange} />
 
-      {newPhoto !== originalProfile && (
+      {newPhoto !== userObj.photoUrl && (
         <div className="factoryForm_clear" onClick={onClearAttachment}>
           <span>Remove</span>
           <FontAwesomeIcon icon={faTimes} />
