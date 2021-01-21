@@ -1,14 +1,14 @@
 import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
-import { dbService } from "fBase";
+import { dbService, storageService } from "fBase";
 import FileUpload from "components/FileUpload";
 import { useHistory } from "react-router-dom";
 
 function ProfileForm({ refreshUser, userObj }) {
   const history = useHistory();
   const [newDisplayName, setNewDisplayName] = useState(userObj.displayName);
-  const [photoUrl, setPhotoUrl] = useState(userObj.photoUrl);
+  const [newPhoto, setNewPhoto] = useState(userObj.photoUrl);
   const originalProfile = userObj.photoUrl;
 
   const onTextChange = (event) => {
@@ -23,12 +23,12 @@ function ProfileForm({ refreshUser, userObj }) {
       target: { files },
     } = event;
     const reader = new FileReader();
-    console.log(userObj);
+
     reader.onloadend = (finishedEvent) => {
       const {
         currentTarget: { result },
       } = finishedEvent; //finishedEvent.currentTarget.result 값을 ES6로 표현한 것
-      setPhotoUrl(result);
+      setNewPhoto(result);
     };
 
     if (files.length > 0) {
@@ -37,48 +37,37 @@ function ProfileForm({ refreshUser, userObj }) {
       reader.readAsDataURL(theFile);
     }
   };
-
+console.log(userObj);
   const onSubmitHandler = async (event) => {
     event.preventDefault();
+    let newPhotoUrl = "";
+
     if (userObj.displayName !== newDisplayName) {
       await userObj.updateProfile({
         displayName: newDisplayName,
-        photoUrl: photoUrl,
       });
     }
 
     //FIND -> UPDATE USER INFO
-    if (photoUrl !== originalProfile) {
-      await dbService
-        .doc(`users/${userObj.uid}`)
-        .get()
-        .then((doc) => {
-          if (doc.exists) {
-            dbService.doc(`users/${userObj.uid}`).update({
-              photoUrl: photoUrl,
-            });
-          } else {
-            //no exist userInfo
-            dbService.doc(`users/${userObj.uid}`).set({
-              userId: userObj.uid,
-              photoUrl: photoUrl,
-            });
-          }
-          alert("프로필이 성공적으로 업데이트 되었습니다.");
-          history.push("/");
-        })
-        .catch(function (error) {
-          console.log("Error getting document:", error);
-        });
+    if (newPhoto !== originalProfile) {
+      const attachmentRef = storageService
+        .ref()
+        .child(`${userObj.uid}/userPhoto`);
+      const response = await attachmentRef.putString(newPhoto, "data_url");
+      newPhotoUrl = await response.ref.getDownloadURL();
+   
+    setNewPhoto(newPhotoUrl);
     }
 
     refreshUser();
+    alert("프로필이 성공적으로 업데이트 되었습니다.");
+    history.push("/");
   };
 
   const onClearAttachment = () => {
-    setPhotoUrl(originalProfile); //원래 사진으로 변경
+    setNewPhoto(originalProfile); //원래 사진으로 변경
   };
-
+console.log(newPhoto);
   return (
     <form onSubmit={onSubmitHandler} className="profileForm">
       <input
@@ -90,15 +79,15 @@ function ProfileForm({ refreshUser, userObj }) {
         onChange={onTextChange}
         className="formInput"
       />
-      {photoUrl ? (
-        <img src={photoUrl} alt="profil_photo" width="300" />
+      {newPhoto ? (
+        <img src={newPhoto} alt="profile_photo" width="300" />
       ) : (
         <p>사진을 업로드 해주세요.</p>
       )}
 
       <FileUpload onFileChange={onFileChange} />
 
-      {photoUrl !== originalProfile && (
+      {newPhoto !== originalProfile && (
         <div className="factoryForm_clear" onClick={onClearAttachment}>
           <span>Remove</span>
           <FontAwesomeIcon icon={faTimes} />

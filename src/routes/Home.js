@@ -21,6 +21,7 @@ const Home = ({ userObj }) => {
   // };
 
   useEffect(() => {
+
     //Listening to DB on real time
     dbService.collection("nweets").onSnapshot((snapshot) => {
       const nweetArray = snapshot.docs.map((doc) => ({
