@@ -8,20 +8,26 @@
     justify-content: center;
 }
 
-.profile_link {
+.navLink {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
 }
 
-.profile_link span {
+.navBar {
     font-size: 12px;
     margin: 10px;
+    color: white;
 }
 
 /* footer */
 
 .App footer {
     margin: 5rem 0;
+}
+
+/* clicked Evnet */
+.currentPage {
+    color: tomato;
 }
