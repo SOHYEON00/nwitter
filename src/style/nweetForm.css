@@ -66,10 +66,10 @@
     color: #03aaff;
     cursor: pointer;
     text-align: center;
+    margin-bottom: 1rem;
 }
 
 .factoryForm_clear span {
     margin-right: 10px;
     font-size:12px;
-    
 }
