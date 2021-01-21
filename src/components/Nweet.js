@@ -60,9 +60,8 @@ function Nweet({ nweetObj, isOwner }) {
         </>
       ) : (
         <>
-          <h2></h2>
           <h4>{nweetObj.text}</h4>
-          {nweetObj.attachmentURL && <img src={nweetObj.attachmentURL} />}
+          {nweetObj.attachmentURL && <img src={nweetObj.attachmentURL} alt="nweet_attachment"/>}
           {isOwner && (
             <>
               <div className="nweet_actions">

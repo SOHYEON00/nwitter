@@ -32,6 +32,7 @@ function NweetFactory({ userObj }) {
       createdAt: Date.now(),
       creatorId: userObj.uid,
       attachmentURL,
+      like: 0,
     };
     await dbService.collection("nweets").add(nweetObj);
 
@@ -87,7 +88,7 @@ function NweetFactory({ userObj }) {
       <FileUpload onFileChange={onFileChange}/>
       {attachment && (
           <div className="factoryForm_attachment">
-            <img src={attachment} style={{ backgroundImage: attachment }} />
+            <img src={attachment} style={{ backgroundImage: attachment }} alt="attachment"/>
             <div className="factoryForm_clear" onClick={onClearAttachment}>
               <span>Remove</span>
               <FontAwesomeIcon icon={faTimes} />

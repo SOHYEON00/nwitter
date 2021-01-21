@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import AppRouter from "components/Router";
-import { authService, dbService } from "fBase";
+import { authService } from "fBase";
 
 // App.js 가 모든 로직들을 다룰 예정
 function App() {
