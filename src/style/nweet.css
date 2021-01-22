@@ -60,4 +60,9 @@
     margin-right: 10px;
 }
 
-
+.like {
+    cursor: pointer;
+    margin-top: 1rem;
+    text-align: right;
+    color: #04aaff;
+}
