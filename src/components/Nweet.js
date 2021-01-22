@@ -2,6 +2,7 @@ import { dbService, storageService } from "fBase";
 import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash, faPencilAlt } from "@fortawesome/free-solid-svg-icons";
+import LikeComponent from "components/LikeComponent";
 
 function Nweet({ nweetObj, isOwner }) {
   const [isEditing, setIsEditing] = useState(false); //Is editing or not
@@ -64,6 +65,7 @@ function Nweet({ nweetObj, isOwner }) {
           {nweetObj.attachmentURL && <img src={nweetObj.attachmentURL} alt="nweet_attachment"/>}
           {isOwner && (
             <>
+              <LikeComponent nweetObj={nweetObj}/>
               <div className="nweet_actions">
                 <span onClick={onDeleteClick}>
                   <FontAwesomeIcon icon={faTrash}/>
