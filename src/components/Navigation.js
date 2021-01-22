@@ -7,39 +7,41 @@ import {useLocation} from "react-router-dom";
 
 function Navigation({ userObj }) {
   const location = useLocation();
+  const currentPage = location.pathname;
 
-  const showCurrentPage = () => {
-    const pathHome = document.getElementById("pathHome");
-    const pathProfile = document.getElementById("pathProfile");
- 
-    if(location.pathname === "/"){
-      pathHome.classList.add("currentPage");
-      pathProfile.classList.remove("currentPage")
-    } else if(location.pathname === "/profile"){
-      pathHome.classList.remove("currentPage");
-      pathProfile.classList.add("currentPage");
-    }
-  }
-
-  showCurrentPage();
-  
     return (
       <nav>
         <ul className="navMenu">
-          <li>
-            <Link to="/" className="navLink" >
+          <li id="liHome">
+            <Link to="/" className="navLink">
               <FontAwesomeIcon icon={faTwitter} color={"#04AAFF"} size="2x" />
-              <span className="navBar" id="pathHome">HOME</span>
-            </Link> 
+              {currentPage === "/" ? (
+                <span className="navBar currentPage" id="pathHome">
+                  HOME
+                </span>
+              ) : (
+                <span className="navBar" id="pathHome">
+                  HOME
+                </span>
+              )}
+            </Link>
           </li>
-          <li>
-            <Link to="/profile" className="navLink" >
+          <li id="liProfile">
+            <Link to="/profile" className="navLink">
               <FontAwesomeIcon icon={faUser} color={"#04AAFF"} size="2x" />
-              <span className="navBar" id="pathProfile">
-                {userObj.displayName
-                  ? `${userObj.displayName}의 Profile`
-                  : "Profile"}
-              </span>
+              {currentPage === "/profile" ? (
+                <span className="navBar currentPage" id="pathProfile">
+                  {userObj.displayName
+                    ? `${userObj.displayName}의 Profile`
+                    : "Profile"}
+                </span>
+              ) : (
+                <span className="navBar" id="pathProfile">
+                  {userObj.displayName
+                    ? `${userObj.displayName}의 Profile`
+                    : "Profile"}
+                </span>
+              )}
             </Link>
           </li>
         </ul>
