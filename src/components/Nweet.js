@@ -62,10 +62,10 @@ function Nweet({ nweetObj, isOwner }) {
       ) : (
         <>
           <h4>{nweetObj.text}</h4>
+          <LikeComponent nweetObj={nweetObj}/>
           {nweetObj.attachmentURL && <img src={nweetObj.attachmentURL} alt="nweet_attachment"/>}
           {isOwner && (
             <>
-              <LikeComponent nweetObj={nweetObj}/>
               <div className="nweet_actions">
                 <span onClick={onDeleteClick}>
                   <FontAwesomeIcon icon={faTrash}/>
