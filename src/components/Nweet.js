@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash, faPencilAlt } from "@fortawesome/free-solid-svg-icons";
 import LikeComponent from "components/LikeComponent";
 
-function Nweet({ nweetObj, isOwner }) {
+function Nweet({ nweetObj, isOwner, creatorName }) {
   const [isEditing, setIsEditing] = useState(false); //Is editing or not
   const [newNweet, setNewNweet] = useState(nweetObj.text); //수정될 nweet
 
@@ -34,7 +34,7 @@ function Nweet({ nweetObj, isOwner }) {
     });
     setIsEditing(false);
   };
-
+  
   return (
     <article className="nweet">
       {isEditing ? (
@@ -61,7 +61,8 @@ function Nweet({ nweetObj, isOwner }) {
         </>
       ) : (
         <>
-          <h4>{nweetObj.text}</h4>
+          <h3 className="creatorName">{creatorName ? `${creatorName}` : "Undefined"}</h3>
+          <h4 className="nweetText">{nweetObj.text}</h4>
           <LikeComponent nweetObj={nweetObj}/>
           {nweetObj.attachmentURL && <img src={nweetObj.attachmentURL} alt="nweet_attachment"/>}
           {isOwner && (

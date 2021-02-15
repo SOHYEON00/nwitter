@@ -27,7 +27,7 @@ const AuthForm = () => {
       const data = newAccount
         ? await authService.createUserWithEmailAndPassword(email, password) // Create account
         : await authService.signInWithEmailAndPassword(email, password); // Log in
-      console.log(data);
+      ;
     } catch (error) {
       setError(error.message);
     }

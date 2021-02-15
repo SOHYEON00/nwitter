@@ -26,11 +26,13 @@ function NweetFactory({ userObj }) {
       const response = await attachmentRef.putString(attachment, "data_url"); //.putString(data, data format)
       attachmentURL = await response.ref.getDownloadURL();
     }
+    console.log(userObj);
 
     const nweetObj = {
       text: nweet,
       createdAt: Date.now(),
       creatorId: userObj.uid,
+      creatorName: userObj.fixedName,
       attachmentURL,
       like: 0,
     };

@@ -32,7 +32,12 @@
     color: rgba(0,0,0,0.8);
 }
 
-.nweet h4 {
+.creatorName {
+    border-bottom: 1px solid #bbb;
+    padding: 0.5rem 0;
+    margin-bottom: 0.5rem;
+}
+.nweetText {
     font-size: 14px;
 }
 

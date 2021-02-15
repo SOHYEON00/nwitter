@@ -6,6 +6,7 @@ import FileUpload from "components/FileUpload";
 import { useHistory } from "react-router-dom";
 
 function ProfileForm({ refreshUser, userObj }) {
+
   const history = useHistory();
   const [originProfile, setOriginProfile] = useState(""); //storage에서 받아온 사진 변수
   const [newDisplayName, setNewDisplayName] = useState(userObj.displayName);
@@ -15,6 +16,7 @@ function ProfileForm({ refreshUser, userObj }) {
     const attachmentRef = storageService
       .ref()
       .child(`${userObj.uid}/userPhoto`); 
+      
     await attachmentRef
     .getDownloadURL().then((url) => {
       setOriginProfile(url);

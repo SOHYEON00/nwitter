@@ -12,12 +12,16 @@ function App() {
   //onAuthStateChanged : 사용자의 로그인 상태를 관찰하는 관찰자를 추가해줌
   useEffect(() => {
     authService.onAuthStateChanged((user) => {
+      
+
       if (user) {
         //로그인한 유저 정보를 저장
+        const emailArray = user.email.split('@');
         setUserObj({
           displayName: user.displayName,
           uid: user.uid,
           photoUrl: user.photoUrl,
+          fixedName: emailArray[0],
           updateProfile: (args) => user.updateProfile(args),
         });
       } else {
@@ -34,6 +38,7 @@ function App() {
     //option1. authService.currentUser object의 크기를 줄여준다.
     //useEffect에서 setUserObj할때 첨부터 크기가 큰 user를 다 데려오는게 아니라 필요한 것만 데려오기.
     const user = authService.currentUser;
+    console.log(user);
     setUserObj({
       displayName: user.displayName,
       uid: user.uid,
