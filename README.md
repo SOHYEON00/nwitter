@@ -24,26 +24,26 @@ npm start
 
 ## ✔ Features
 
-* Firebase를 이용한 Authentication 기능
+* **Firebase를 이용한 Authentication 기능**
 
   - Create new account
   - Log in / Log out 
   - Github/Google 계정을 이용한 로그인
   <br/>
   
-* Post 작성 CRUD
+* **Post 작성 CRUD**
 
   - image 파일 업로드 기능
   - 각 post마다 작성자명 확인 가능
   - 본인이 작성한 post는 수정/삭제 가능함
 <br/>
 
-* 프로필 업데이트 CRUD
+* **프로필 업데이트 CRUD**
 
   - 프로필 닉네임 / 이미지 변경 가능
 <br/>
 
-* 좋아요 기능
+* **좋아요 기능**
 
 <br/>
 
