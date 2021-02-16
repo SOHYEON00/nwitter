@@ -54,8 +54,9 @@ Firebase
 <br/>
 
 ### 🚸 modules
-gh-pages : 완성된 웹사이트를 deploy하기 위해 사용
-uuid : 랜덤 변수 생성을 위한 모듈
-react-router : SPA 구현에 필요한 리액트 라우팅 기능을 위한 모듈
-firebase : DB역할인 Firebase와 연결하기 위한 모듈
-FontAwesome : svg태그를 이용한 icon 사용
+
+* gh-pages : 완성된 웹사이트를 deploy하기 위해 사용
+* uuid : 랜덤 변수 생성을 위한 모듈
+* react-router : SPA 구현에 필요한 리액트 라우팅 기능을 위한 모듈
+* firebase : DB역할인 Firebase와 연결하기 위한 모듈
+* FontAwesome : svg태그를 이용한 icon 사용
