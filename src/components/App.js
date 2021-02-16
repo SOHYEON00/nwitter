@@ -64,7 +64,7 @@ function App() {
         "Initializing..."
       )}
       <footer>
-        &copy; {new Date().getFullYear()} Nwitter - nomardcoders.com
+        &copy; {new Date().getFullYear()} Nwitter - nomardcoders.com SOHYEON OH
       </footer>
     </div>
   );
