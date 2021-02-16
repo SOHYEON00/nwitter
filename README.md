@@ -10,7 +10,10 @@ NoSQL인 Firebase를 사용해 프론트엔드 구현에 집중할 수 있는 �
 
 <br/>
 
-## How to Start
+## ⚠ How to Start
+
+**You can just Click [HERE](https://sohyeon00.github.io/nwitter) to explore Nwitter.**
+
 ```
 // Install the dependancies
 npm install
