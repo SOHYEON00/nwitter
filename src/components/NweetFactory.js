@@ -26,7 +26,6 @@ function NweetFactory({ userObj }) {
       const response = await attachmentRef.putString(attachment, "data_url"); //.putString(data, data format)
       attachmentURL = await response.ref.getDownloadURL();
     }
-    console.log(userObj);
 
     const nweetObj = {
       text: nweet,
